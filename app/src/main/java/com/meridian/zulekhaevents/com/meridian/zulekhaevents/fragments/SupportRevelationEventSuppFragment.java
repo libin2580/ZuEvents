@@ -81,7 +81,7 @@ public class SupportRevelationEventSuppFragment extends Fragment {
     public SupportRevelationEventSuppFragment() {
         // Required empty public constructor
     }
-
+String Test;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
