@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,6 +108,9 @@ public class ProfileFragment_event_supp extends Fragment {
                     //}
                 }
             }catch (Exception e){e.printStackTrace();}
+
+
+
         }
     }
 
@@ -122,7 +126,30 @@ public class ProfileFragment_event_supp extends Fragment {
         View v=inflater.inflate(R.layout.fragment_profile, container, false);
 
         //profpic=(ImageView)v.findViewById(R.id.imageView5);
+        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+        System.out.println("fragment by id : "+fragmentManager.findFragmentById(R.id.mainfragevsupp));
+        String current_fragment=fragmentManager.findFragmentById(R.id.mainfragevsupp).toString().substring(0,fragmentManager.findFragmentById(R.id.mainfragevsupp).toString().indexOf("{"));
+        System.out.println("current_fragment : "+current_fragment);
 
+        if(current_fragment.trim().equalsIgnoreCase("ProfileFragment_event_supp")) {
+            EventSupporterHomeActivity.imgexit.setVisibility(View.GONE);
+            EventSupporterHomeActivity.ib.setVisibility(View.VISIBLE);
+            SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", getActivity().MODE_PRIVATE);
+            prefs.getString("userid", null);
+
+            // t2.setText(prefs.getString("fullname","Name"));
+            if(prefs.getString("title",null)!=null){
+                EventSupporterHomeActivity.t2.setText("Welcome "+prefs.getString("title",null)+" "+prefs.getString("fullname",null));
+            }else{
+                EventSupporterHomeActivity.t2.setText("Welcome "+prefs.getString("fullname",null));
+            }
+        }
+        else {
+            EventSupporterHomeActivity.imgexit.setVisibility(View.VISIBLE);
+            EventSupporterHomeActivity.ib.setVisibility(View.GONE);
+
+
+        }
         sliderShow = (SliderLayout)v. findViewById(R.id.slider);
        // b3=(Button)v.findViewById(R.id.button3);
         b4=(Button)v.findViewById(R.id.button4);

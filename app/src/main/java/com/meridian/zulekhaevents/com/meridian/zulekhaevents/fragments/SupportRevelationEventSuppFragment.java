@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.meridian.zulekhaevents.EventSupporterHomeActivity;
 import com.meridian.zulekhaevents.R;
 import com.meridian.zulekhaevents.com.meridian.zulekhaevents.model.EventsModel;
 import com.tapadoo.alerter.Alerter;
@@ -120,7 +122,31 @@ String Test,s;
         // Inflate the layout for this fragment
        v= inflater.inflate(R.layout.fragment_support_revelation_event_supp, container, false);
 
+        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+        System.out.println("fragment by id : "+fragmentManager.findFragmentById(R.id.mainfragevsupp));
+        String current_fragment=fragmentManager.findFragmentById(R.id.mainfragevsupp).toString().substring(0,fragmentManager.findFragmentById(R.id.mainfragevsupp).toString().indexOf("{"));
+        System.out.println("current_fragment : "+current_fragment);
 
+        if(current_fragment.trim().equalsIgnoreCase("ProfileFragment_event_supp")) {
+            EventSupporterHomeActivity.imgexit.setVisibility(View.GONE);
+            EventSupporterHomeActivity.ib.setVisibility(View.VISIBLE);
+
+            SharedPreferences prefs = getActivity().getSharedPreferences("MyPrefs", getActivity().MODE_PRIVATE);
+            prefs.getString("userid", null);
+
+            // t2.setText(prefs.getString("fullname","Name"));
+            if(prefs.getString("title",null)!=null){
+                EventSupporterHomeActivity.t2.setText("Welcome "+prefs.getString("title",null)+" "+prefs.getString("fullname",null));
+            }else{
+                EventSupporterHomeActivity.t2.setText("Welcome "+prefs.getString("fullname",null));
+            }
+        }
+        else {
+            EventSupporterHomeActivity.imgexit.setVisibility(View.VISIBLE);
+            EventSupporterHomeActivity.ib.setVisibility(View.GONE);
+
+            EventSupporterHomeActivity.t2.setText("Support Revelation");
+        }
 
 
         ScrollView sView = (ScrollView) v.findViewById(R.id.scroll);
